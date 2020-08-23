@@ -6,8 +6,8 @@ You can controll the snake by using the "W", "A", "S" and "D" keys.
 When you hit the walls or hit yourself, the game is lost.
 You will get points according to the number of parts you collected.
 Have fun and try to beat the highscore list.
-![Alt text](Screenshots/In_game.PNG?raw=true "Title")
-![Alt text](Screenshots/End_screen.PNG?raw=true "Title")
+![Alt text](Screenshots/In_game.PNG?raw=true "In game")
+![Alt text](Screenshots/End_screen.PNG?raw=true "End screen")
 
 ## To be implemented
 * Change the array pointers to a std::vector.
