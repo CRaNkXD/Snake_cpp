@@ -1,9 +1,0 @@
-Name                  Punkte
-LoupingLoui             5000
-Fritz                   4000
-SumseBiene              3000
-KingKarl                2000
-CRaNk                   1100
-LarsLarson              1000
-bla                      900
-HasiHinterbein           500
