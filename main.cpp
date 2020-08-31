@@ -4,17 +4,15 @@
 #include "spielfeld.h"
 #include "snake.h"
 
-using namespace std;
-
 int main()
 {
     Spielfeld cSpielfeld(15);
     Snake cSnakeHead(cSpielfeld.GetSize()/2, cSpielfeld.GetSize()/2, cSpielfeld);
 
-    cout << "Dies ist eine Comandfenster Snake Version." << endl;
-    cout << "Die Schlange wird mit w,a,s,d gesteuert.\nBei Start bewegt sich die Schlange nach oben." << endl;
-    cout << "Dein Highscore wird in der Datei Snake_Highscore gespeichert." << endl;
-    cout << "Zum Starten druecke s." << endl;
+    std::cout << "Dies ist eine Comandfenster Snake Version." << std::endl;
+    std::cout << "Die Schlange wird mit w,a,s,d gesteuert.\nBei Start bewegt sich die Schlange nach oben." << std::endl;
+    std::cout << "Dein Highscore wird in der Datei Snake_Highscore gespeichert." << std::endl;
+    std::cout << "Zum Starten druecke s." << std::endl;
 
     bool start(false);
     while (!start)
