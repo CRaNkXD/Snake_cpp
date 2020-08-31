@@ -73,7 +73,7 @@ void Snake::MoveRight()
     m_nXPos += 1;
 }
 
-Snake::m_strSnakePart* Snake::GetSnakePart()
+m_strSnakePart* Snake::GetSnakePart()
 {
     return m_pstrSnakePart;
 }

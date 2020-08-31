@@ -1,8 +1,14 @@
-#ifndef SNAKE_H
-#define SNAKE_H
+#pragma once
 
 #include "spielfeld.h"
 
+struct m_strSnakePart
+{
+    int str_nXPos;
+    int str_nYPos;
+    char str_sRichtung;
+    int str_nId;
+};
 
 class Snake
 {
@@ -12,13 +18,6 @@ private:
     char m_sRichtung;
     int m_nSnakePartCounter;
     bool m_bHeadHitPart;
-    struct m_strSnakePart
-    {
-        int str_nXPos;
-        int str_nYPos;
-        char str_sRichtung;
-        int str_nId;
-    };
     m_strSnakePart* m_pstrSnakePart;
     Snake();
 
@@ -47,4 +46,3 @@ public:
 
 };
 
-#endif // SNAKE_H

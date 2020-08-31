@@ -15,7 +15,6 @@ int iRand(int iMin, int iMax)
     return iMin + (rand() % (iMax - iMin + 1));
 }
 
-using namespace std;
 
 Spielfeld::Spielfeld()
 {
@@ -59,17 +58,17 @@ void Spielfeld::Print(Snake &pcSnakeHead)
             // Print the walls.
             if (nRow * nCol == 0 || (nCol == m_nSize + 1 || nRow == m_nSize + 1))
             {
-                cout << "+";
+                std::cout << "+";
                 bPrint = true;
             }
             else if (pcSnakeHead.GetXPos() == nCol && pcSnakeHead.GetYPos() == nRow)
             {
-                cout << "@";
+                std::cout << "@";
                 bPrint = true;
             }
             else if(m_nSnakePartXPos == nCol && m_nSnakePartYPos == nRow)
             {
-                cout << "@";
+                std::cout << "@";
                 bPrint = true;
             }
             else if (pcSnakeHead.GetSnakePartCounter() >= 1)
@@ -80,7 +79,7 @@ void Spielfeld::Print(Snake &pcSnakeHead)
                     if(pcSnakeHead.GetSnakePart()[nSnakeParts].str_nXPos == nCol
                             && pcSnakeHead.GetSnakePart()[nSnakeParts].str_nYPos == nRow)
                     {
-                        cout << "@";
+                        std::cout << "@";
                         bPrint = true;
                     }
                 }
@@ -89,7 +88,7 @@ void Spielfeld::Print(Snake &pcSnakeHead)
             // If no other sign was printed, print now a " ".
             if (!bPrint)
             {
-                cout << " ";
+                std::cout << " ";
             }
             else
             {
@@ -97,7 +96,7 @@ void Spielfeld::Print(Snake &pcSnakeHead)
             }
 
         }
-        cout << endl;
+        std::cout << std::endl;
     }
     std::cout << " Punkte:  " << m_nPoints;
     COORD p = { 0, 0 };
@@ -144,7 +143,7 @@ void Spielfeld::SetSnakePartPos(Snake &pcSnakeHead)
         else
         {
             bPosSet = true;
-            cerr << "Fehler bei der Positionierung des SnakePart!";
+            std::cerr << "Fehler bei der Positionierung des SnakePart!";
         }
 
     }
@@ -185,33 +184,33 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
 {
 
         system("cls");
-        cout << endl<< endl;
+        std::cout << std::endl<< std::endl;
 
         // Width for the Highscore file.
         int width(14);
         bool bNewHighscore(false);
-        string sName[8];
-        string sPoints[8];
-        string sDummy;
-        string sNameTemp, sNameTemp2, sPointsTemp, sPointsTemp2;
+        std::string sName[8];
+        std::string sPoints[8];
+        std::string sDummy;
+        std::string sNameTemp, sNameTemp2, sPointsTemp, sPointsTemp2;
 
-        fstream InputFile("Snake_Highscore.txt");
+        std::fstream InputFile("Snake_Highscore.txt");
         if (!InputFile)
         {
-            ofstream OutputFile("Snake_Highscore.txt");
-            OutputFile << left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
-            OutputFile << left << setw(width) << "LoupingLoui" << right << setw(width) << "5000" << endl;
-            OutputFile << left << setw(width) << "Fritz" << right << setw(width) << "4000" << endl;
-            OutputFile << left << setw(width) << "SumseBiene" << right << setw(width) << "3000" << endl;
-            OutputFile << left << setw(width) << "KingKarl" << right << setw(width) << "2000" << endl;
-            OutputFile << left << setw(width) << "LarsLarson" << right << setw(width) << "1000" << endl;
-            OutputFile << left << setw(width) << "HasiHinterbein" << right << setw(width) << "500" << endl;
-            OutputFile << left << setw(width) << "BlinderMoench" << right << setw(width) << "200" << endl;
-            OutputFile << left << setw(width) << "LahmeEnte" << right << setw(width) << "100" << endl;
+            std::ofstream OutputFile("Snake_Highscore.txt");
+            OutputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+            OutputFile << std::left << std::setw(width) << "LoupingLoui" << std::right << std::setw(width) << "5000" << std::endl;
+            OutputFile << std::left << std::setw(width) << "Fritz" << std::right << std::setw(width) << "4000" << std::endl;
+            OutputFile << std::left << std::setw(width) << "SumseBiene" << std::right << std::setw(width) << "3000" << std::endl;
+            OutputFile << std::left << std::setw(width) << "KingKarl" << std::right << std::setw(width) << "2000" << std::endl;
+            OutputFile << std::left << std::setw(width) << "LarsLarson" << std::right << std::setw(width) << "1000" << std::endl;
+            OutputFile << std::left << std::setw(width) << "HasiHinterbein" << std::right << std::setw(width) << "500" << std::endl;
+            OutputFile << std::left << std::setw(width) << "BlinderMoench" << std::right << std::setw(width) << "200" << std::endl;
+            OutputFile << std::left << std::setw(width) << "LahmeEnte" << std::right << std::setw(width) << "100" << std::endl;
             OutputFile.close();
 
-            fstream InputFile("Snake_Highscore.txt");
-            getline(InputFile, sDummy);
+            std::fstream InputFile("Snake_Highscore.txt");
+            std::getline(InputFile, sDummy);
             for (int i(0); i < 8; i++)
             {
                 InputFile >> sName[i];
@@ -227,16 +226,16 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
                     sPointsTemp = sPointsTemp2;
                 }
 
-                if (stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
+                if (std::stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
                 {
-                    cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << endl;
-                    cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << endl;
-                    cout << "Es sind keine Leerzeichen erlaubt!" << endl;
+                    std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
+                    std::cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << std::endl;
+                    std::cout << "Es sind keine Leerzeichen erlaubt!" << std::endl;
                     sNameTemp = sName[i];
-                    cin >> sName[i];
-                    getline(cin ,sDummy);
+                    std::cin >> sName[i];
+                    std::getline(std::cin ,sDummy);
                     sPointsTemp = sPoints[i];
-                    sPoints[i] = to_string(this->GetPoints());
+                    sPoints[i] = std::to_string(this->GetPoints());
                     bNewHighscore = true;
                 }
 
@@ -244,15 +243,15 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
 
             if (bNewHighscore)
             {
-                cout << endl << endl;
-                InputFile.seekg(0, ios::beg);
+                std::cout << std::endl << std::endl;
+                InputFile.seekg(0, std::ios::beg);
 
-                InputFile << left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
-                cout <<  left << setw(width) << "Platz" <<  left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
+                InputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+                std::cout << std::left << std::setw(width) << "Platz" << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
                 for (int i(0); i < 8; i++)
                 {
-                    InputFile  << left << setw(width) << sName[i] << right << setw(width) << sPoints[i] << endl;
-                    cout << i+1 << left << setw(width) << ". Platz" << left << setw(width) << sName[i] << right << setw(width) << sPoints[i] << endl;
+                    InputFile  << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
+                    std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
                 }
             }
 
@@ -261,8 +260,8 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
         }
         else
         {
-            fstream InputFile("Snake_Highscore.txt");
-            getline(InputFile, sDummy);
+            std::fstream InputFile("Snake_Highscore.txt");
+            std::getline(InputFile, sDummy);
             for (int i(0); i < 8; i++)
             {
                 InputFile >> sName[i];
@@ -279,31 +278,31 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
                     sPointsTemp = sPointsTemp2;
                 }
 
-                if (stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
+                if (std::stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
                 {
-                    cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << endl;
-                    cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << endl;
-                    cout << "Es sind keine Leerzeichen erlaubt!" << endl;
+                    std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
+                    std::cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << std::endl;
+                    std::cout << "Es sind keine Leerzeichen erlaubt!" << std::endl;
                     sNameTemp = sName[i];
-                    cin >> sName[i];
-                    getline(cin ,sDummy);
+                    std::cin >> sName[i];
+                    std::getline(std::cin ,sDummy);
                     sPointsTemp = sPoints[i];
-                    sPoints[i] = to_string(this->GetPoints());
+                    sPoints[i] = std::to_string(this->GetPoints());
                     bNewHighscore = true;
                 }
             }
 
             if (bNewHighscore)
             {
-                cout << endl << endl;
-                InputFile.seekg(0, ios::beg);
+                std::cout << std::endl << std::endl;
+                InputFile.seekg(0, std::ios::beg);
 
-                InputFile << left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
-                cout <<  left << setw(width) << "Platz" << left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
+                InputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+                std::cout << std::left << std::setw(width) << "Platz" << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
                 for (int i(0); i < 8; i++)
                 {
-                    InputFile  << left << setw(width) << sName[i] << right << setw(width) << sPoints[i] << endl;
-                    cout << i+1 << left << setw(width) << ". Platz" << left << setw(width) << sName[i] << right << setw(width) << sPoints[i] << endl;
+                    InputFile  << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
+                    std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
                 }
             }
 
@@ -312,19 +311,19 @@ bool Spielfeld::GameEnd(Snake &pcSnakeHead)
 
         if (!bNewHighscore)
         {
-             cout << "Du bist gegen die Wand gefahren oder hast versucht dich selbst zu fressen." << endl;
-             cout << "Du hast verloren!" << endl;
-             cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << endl;
-             cout << endl << endl;
-             cout <<  left << setw(width) << "Platz"  <<  left << setw(width) << "Name" << right << setw(width) << "Punkte" << endl;
-             for (int i(0); i < 8; i++)
-             {
-                 cout << i+1 << left << setw(width) << ". Platz" << left << setw(width) << sName[i] << right << setw(width) << sPoints[i] << endl;
-             }
+            std::cout << "Du bist gegen die Wand gefahren oder hast versucht dich selbst zu fressen." << std::endl;
+            std::cout << "Du hast verloren!" << std::endl;
+            std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
+            std::cout << std::endl << std::endl;
+            std::cout << std::left << std::setw(width) << "Platz"  << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+            for (int i(0); i < 8; i++)
+            {
+                std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
+            }
         }
 
-        cout << endl;
-        cout << "Druecke e fuer Exit und n fuer nochmal!" << endl;
+        std::cout << std::endl;
+        std::cout << "Druecke e fuer Exit und n fuer nochmal!" << std::endl;
         char c('a');
         while (true)
         {

@@ -1,6 +1,4 @@
-#ifndef SPIELFELD_H
-#define SPIELFELD_H
-
+#pragma once
 class Snake;
 
 class Spielfeld
@@ -28,5 +26,3 @@ public:
     void SetPoints(int nValue);
     bool GameEnd(Snake &pcSnakeHead);
 };
-
-#endif // SPIELFELD_H
