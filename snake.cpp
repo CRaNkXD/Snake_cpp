@@ -6,21 +6,19 @@ Snake::Snake()
     : m_nXPos(10), m_nYPos(10), m_sRichtung('w'), m_nSnakePartCounter(0)
     , m_bHeadHitPart(false)
 {
-    m_pstrSnakePart = new m_strSnakePart[22 * 22];
+    m_vSnakePart = std::vector<m_strSnakePart>(22 * 22);
 }
 
 Snake::Snake(int nXpos, int nYpos, Spielfeld &cSpielfeld)
     : m_nXPos(nXpos), m_nYPos(nYpos), m_sRichtung('w'), m_nSnakePartCounter(0)
     , m_bHeadHitPart(false)
 {
-    m_pstrSnakePart = new m_strSnakePart[cSpielfeld.GetSize()*cSpielfeld.GetSize()];
+    m_vSnakePart = std::vector<m_strSnakePart>(cSpielfeld.GetSize()*cSpielfeld.GetSize());
 }
 
 Snake::~Snake()
 {
 //    std::cout << "Destructor Snake" << std::endl;
-    delete[] m_pstrSnakePart;
-    m_pstrSnakePart = 0;
 }
 
 int Snake::GetXPos()
@@ -73,9 +71,9 @@ void Snake::MoveRight()
     m_nXPos += 1;
 }
 
-m_strSnakePart* Snake::GetSnakePart()
+std::vector<m_strSnakePart> Snake::GetSnakePart()
 {
-    return m_pstrSnakePart;
+    return m_vSnakePart;
 }
 
 void Snake::AddSnakePart()
@@ -83,17 +81,17 @@ void Snake::AddSnakePart()
     m_nSnakePartCounter += 1;
     if (m_nSnakePartCounter == 1)
     {
-    m_pstrSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
-    m_pstrSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_nXPos;
-    m_pstrSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_nYPos;
-    m_pstrSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
+    m_vSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
+    m_vSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_nXPos;
+    m_vSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_nYPos;
+    m_vSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
     }
     else
     {
-        m_pstrSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
-        m_pstrSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_pstrSnakePart[m_nSnakePartCounter - 2].str_nXPos;
-        m_pstrSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_pstrSnakePart[m_nSnakePartCounter - 2].str_nYPos;
-        m_pstrSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
+        m_vSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
+        m_vSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_vSnakePart[m_nSnakePartCounter - 2].str_nXPos;
+        m_vSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_vSnakePart[m_nSnakePartCounter - 2].str_nYPos;
+        m_vSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
     }
 }
 
@@ -108,61 +106,61 @@ void Snake::MoveSnakePart()
     for (int nSnakePart(m_nSnakePartCounter - 1); nSnakePart >= 0  ; nSnakePart--)
     {
         // Check if the head hits a part of the snake. When this happens the game will stop.
-        if (m_nXPos == m_pstrSnakePart[nSnakePart].str_nXPos && m_nYPos == m_pstrSnakePart[nSnakePart].str_nYPos)
+        if (m_nXPos == m_vSnakePart[nSnakePart].str_nXPos && m_nYPos == m_vSnakePart[nSnakePart].str_nYPos)
             m_bHeadHitPart = true;
 
         // Move the current part in the direction, which is saved in str_sRichtung.
         // New parts have no direction until now. They will get the direction in the next step.
-        switch (m_pstrSnakePart[nSnakePart].str_sRichtung)
+        switch (m_vSnakePart[nSnakePart].str_sRichtung)
         {
         case 'w':
-            m_pstrSnakePart[nSnakePart].str_nYPos -= 1;
+            m_vSnakePart[nSnakePart].str_nYPos -= 1;
             break;
         case 's':
-            m_pstrSnakePart[nSnakePart].str_nYPos += 1;
+            m_vSnakePart[nSnakePart].str_nYPos += 1;
             break;
         case 'a':
-            m_pstrSnakePart[nSnakePart].str_nXPos -= 1;
+            m_vSnakePart[nSnakePart].str_nXPos -= 1;
             break;
         case 'd':
-            m_pstrSnakePart[nSnakePart].str_nXPos += 1;
+            m_vSnakePart[nSnakePart].str_nXPos += 1;
             break;
         }
 
         // Set the direction for each part depending on the part which runs before.
-        if (m_pstrSnakePart[nSnakePart].str_nId == 1)
+        if (m_vSnakePart[nSnakePart].str_nId == 1)
         {
             switch (m_sRichtung)
             {
             case 'w':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'w';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'w';
                 break;
             case 's':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 's';
+                m_vSnakePart[nSnakePart].str_sRichtung = 's';
                 break;
             case 'a':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'a';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'a';
                 break;
             case 'd':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'd';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'd';
                 break;
             }
         }
         else
         {
-            switch (m_pstrSnakePart[nSnakePart - 1].str_sRichtung)
+            switch (m_vSnakePart[nSnakePart - 1].str_sRichtung)
             {
             case 'w':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'w';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'w';
                 break;
             case 's':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 's';
+                m_vSnakePart[nSnakePart].str_sRichtung = 's';
                 break;
             case 'a':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'a';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'a';
                 break;
             case 'd':
-                m_pstrSnakePart[nSnakePart].str_sRichtung = 'd';
+                m_vSnakePart[nSnakePart].str_sRichtung = 'd';
                 break;
             }
         }

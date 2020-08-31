@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #include "spielfeld.h"
 
@@ -18,7 +19,7 @@ private:
     char m_sRichtung;
     int m_nSnakePartCounter;
     bool m_bHeadHitPart;
-    m_strSnakePart* m_pstrSnakePart;
+    std::vector<m_strSnakePart> m_vSnakePart;
     Snake();
 
 public:
@@ -41,7 +42,7 @@ public:
     void MoveLeft();
     void MoveRight();
     void MoveSnakePart();
-    m_strSnakePart* GetSnakePart();
+    std::vector<m_strSnakePart> GetSnakePart();
     void AddSnakePart();
 
 };
