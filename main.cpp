@@ -93,7 +93,7 @@ int main()
        }
 
        // If the head hits a wall or itself the game is lost.
-       if(cSnakeHead.GetXPos()== cSpielfeld.GetSize() + 1 || cSnakeHead.GetXPos()== 0
+       if(cSnakeHead.GetXPos() == cSpielfeld.GetSize() + 1 || cSnakeHead.GetXPos() == 0
                || cSnakeHead.GetYPos()== cSpielfeld.GetSize() + 1 || cSnakeHead.GetYPos()== 0 || cSnakeHead.GetHeadHitPart())
        {
            // Returns true or false depending whether the user wants to play again.

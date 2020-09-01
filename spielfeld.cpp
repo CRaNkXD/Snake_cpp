@@ -180,173 +180,122 @@ void Spielfeld::SetPoints(int nValue)
     m_nPoints = nValue;
 }
 
-bool Spielfeld::GameEnd(Snake &pcSnakeHead)
+bool Spielfeld::GameEnd(Snake& pcSnakeHead)
 {
 
-        system("cls");
-        std::cout << std::endl<< std::endl;
+    system("cls");
+    std::cout << std::endl << std::endl;
 
-        // Width for the Highscore file.
-        int width(14);
-        bool bNewHighscore(false);
-        std::string sName[8];
-        std::string sPoints[8];
-        std::string sDummy;
-        std::string sNameTemp, sNameTemp2, sPointsTemp, sPointsTemp2;
+    // Width for the Highscore file.
+    int width{ 14 };
+    bool bNewHighscore{ false };
+    std::vector<std::string> sName(8);
+    std::vector<std::string> sPoints(8);
+    std::string sDummy;
+    std::string sNameTemp, sNameTemp2, sPointsTemp, sPointsTemp2;
 
-        std::fstream InputFile("Snake_Highscore.txt");
-        if (!InputFile)
+    std::fstream InputFile("Snake_Highscore.txt");
+    if (!InputFile)
+    {
+        std::ofstream OutputFile("Snake_Highscore.txt");
+        OutputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+        OutputFile << std::left << std::setw(width) << "LoupingLoui" << std::right << std::setw(width) << "5000" << std::endl;
+        OutputFile << std::left << std::setw(width) << "Fritz" << std::right << std::setw(width) << "4000" << std::endl;
+        OutputFile << std::left << std::setw(width) << "SumseBiene" << std::right << std::setw(width) << "3000" << std::endl;
+        OutputFile << std::left << std::setw(width) << "KingKarl" << std::right << std::setw(width) << "2000" << std::endl;
+        OutputFile << std::left << std::setw(width) << "LarsLarson" << std::right << std::setw(width) << "1000" << std::endl;
+        OutputFile << std::left << std::setw(width) << "HasiHinterbein" << std::right << std::setw(width) << "500" << std::endl;
+        OutputFile << std::left << std::setw(width) << "BlinderMoench" << std::right << std::setw(width) << "200" << std::endl;
+        OutputFile << std::left << std::setw(width) << "LahmeEnte" << std::right << std::setw(width) << "100" << std::endl;
+        OutputFile.close();
+    }
+    
+    if (!InputFile.is_open())
+        InputFile.open("Snake_Highscore.txt");
+
+    std::getline(InputFile, sDummy);
+    for (int i(0); i < 8; i++)
+    {
+        InputFile >> sName[i];
+        InputFile >> sPoints[i];
+
+        if (bNewHighscore)
         {
-            std::ofstream OutputFile("Snake_Highscore.txt");
-            OutputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-            OutputFile << std::left << std::setw(width) << "LoupingLoui" << std::right << std::setw(width) << "5000" << std::endl;
-            OutputFile << std::left << std::setw(width) << "Fritz" << std::right << std::setw(width) << "4000" << std::endl;
-            OutputFile << std::left << std::setw(width) << "SumseBiene" << std::right << std::setw(width) << "3000" << std::endl;
-            OutputFile << std::left << std::setw(width) << "KingKarl" << std::right << std::setw(width) << "2000" << std::endl;
-            OutputFile << std::left << std::setw(width) << "LarsLarson" << std::right << std::setw(width) << "1000" << std::endl;
-            OutputFile << std::left << std::setw(width) << "HasiHinterbein" << std::right << std::setw(width) << "500" << std::endl;
-            OutputFile << std::left << std::setw(width) << "BlinderMoench" << std::right << std::setw(width) << "200" << std::endl;
-            OutputFile << std::left << std::setw(width) << "LahmeEnte" << std::right << std::setw(width) << "100" << std::endl;
-            OutputFile.close();
+            sNameTemp2 = sName[i];
+            sName[i] = sNameTemp;
+            sNameTemp = sNameTemp2;
 
-            std::fstream InputFile("Snake_Highscore.txt");
-            std::getline(InputFile, sDummy);
-            for (int i(0); i < 8; i++)
-            {
-                InputFile >> sName[i];
-                InputFile >> sPoints[i];
-                if (bNewHighscore)
-                {
-                    sNameTemp2 = sName[i];
-                    sName[i] = sNameTemp;
-                    sNameTemp = sNameTemp2;
-
-                    sPointsTemp2 = sPoints[i];
-                    sPoints[i] = sPointsTemp;
-                    sPointsTemp = sPointsTemp2;
-                }
-
-                if (std::stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
-                {
-                    std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
-                    std::cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << std::endl;
-                    std::cout << "Es sind keine Leerzeichen erlaubt!" << std::endl;
-                    sNameTemp = sName[i];
-                    std::cin >> sName[i];
-                    std::getline(std::cin ,sDummy);
-                    sPointsTemp = sPoints[i];
-                    sPoints[i] = std::to_string(this->GetPoints());
-                    bNewHighscore = true;
-                }
-
-            }
-
-            if (bNewHighscore)
-            {
-                std::cout << std::endl << std::endl;
-                InputFile.seekg(0, std::ios::beg);
-
-                InputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-                std::cout << std::left << std::setw(width) << "Platz" << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-                for (int i(0); i < 8; i++)
-                {
-                    InputFile  << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
-                    std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
-                }
-            }
-
-            InputFile.close();
-
-        }
-        else
-        {
-            std::fstream InputFile("Snake_Highscore.txt");
-            std::getline(InputFile, sDummy);
-            for (int i(0); i < 8; i++)
-            {
-                InputFile >> sName[i];
-                InputFile >> sPoints[i];
-
-                if (bNewHighscore)
-                {
-                    sNameTemp2 = sName[i];
-                    sName[i] = sNameTemp;
-                    sNameTemp = sNameTemp2;
-
-                    sPointsTemp2 = sPoints[i];
-                    sPoints[i] = sPointsTemp;
-                    sPointsTemp = sPointsTemp2;
-                }
-
-                if (std::stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
-                {
-                    std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
-                    std::cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << std::endl;
-                    std::cout << "Es sind keine Leerzeichen erlaubt!" << std::endl;
-                    sNameTemp = sName[i];
-                    std::cin >> sName[i];
-                    std::getline(std::cin ,sDummy);
-                    sPointsTemp = sPoints[i];
-                    sPoints[i] = std::to_string(this->GetPoints());
-                    bNewHighscore = true;
-                }
-            }
-
-            if (bNewHighscore)
-            {
-                std::cout << std::endl << std::endl;
-                InputFile.seekg(0, std::ios::beg);
-
-                InputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-                std::cout << std::left << std::setw(width) << "Platz" << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-                for (int i(0); i < 8; i++)
-                {
-                    InputFile  << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
-                    std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
-                }
-            }
-
-            InputFile.close();
+            sPointsTemp2 = sPoints[i];
+            sPoints[i] = sPointsTemp;
+            sPointsTemp = sPointsTemp2;
         }
 
-        if (!bNewHighscore)
+        if (std::stoi(sPoints[i]) <= this->GetPoints() && bNewHighscore == false)
         {
-            std::cout << "Du bist gegen die Wand gefahren oder hast versucht dich selbst zu fressen." << std::endl;
-            std::cout << "Du hast verloren!" << std::endl;
             std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
-            std::cout << std::endl << std::endl;
-            std::cout << std::left << std::setw(width) << "Platz"  << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
-            for (int i(0); i < 8; i++)
-            {
-                std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
-            }
+            std::cout << "Du hast einen neuen Highscore errungen! Gib deinen Namen ein:" << std::endl;
+            std::cout << "Es sind keine Leerzeichen erlaubt!" << std::endl;
+            sNameTemp = sName[i];
+            std::cin >> sName[i];
+            std::getline(std::cin ,sDummy);
+            sPointsTemp = sPoints[i];
+            sPoints[i] = std::to_string(this->GetPoints());
+            bNewHighscore = true;
         }
+    }
 
-        std::cout << std::endl;
-        std::cout << "Druecke e fuer Exit und n fuer nochmal!" << std::endl;
-        char c('a');
-        while (true)
+    if (bNewHighscore)
+    {
+        std::cout << std::endl << std::endl;
+        InputFile.seekg(0, std::ios::beg);
+
+        InputFile << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+        std::cout << std::left << std::setw(width) << "Platz" << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+        for (int i(0); i < 8; i++)
         {
-            c = _getch();
-            if(c == 'e')
-            {
-                return true;
-            }
-            else if (c == 'n')
-            {
-                system("cls");
-                pcSnakeHead.SetXPos(this->GetSize()/2);
-                pcSnakeHead.SetYPos(this->GetSize()/2);
-                pcSnakeHead.SetRichtung('w');
-                this->SetSnakePartPos(pcSnakeHead);
-                pcSnakeHead.SetSnakePartCounter(0);
-                this->SetNewPartCounter(0);
-                this->SetPoints(0);
-                pcSnakeHead.SetHeadHitPart(false);
-                return false;
-            }
+            InputFile  << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
+            std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
         }
-        return true;
+    }
 
+    InputFile.close();
 
+    if (!bNewHighscore)
+    {
+        std::cout << "Du bist gegen die Wand gefahren oder hast versucht dich selbst zu fressen." << std::endl;
+        std::cout << "Du hast verloren!" << std::endl;
+        std::cout << "Du hast " << this->GetPoints() << " Punkte erreicht!" << std::endl;
+        std::cout << std::endl << std::endl;
+        std::cout << std::left << std::setw(width) << "Platz"  << std::left << std::setw(width) << "Name" << std::right << std::setw(width) << "Punkte" << std::endl;
+        for (int i(0); i < 8; i++)
+        {
+            std::cout << i+1 << std::left << std::setw(width) << ". Platz" << std::left << std::setw(width) << sName[i] << std::right << std::setw(width) << sPoints[i] << std::endl;
+        }
+    }
+
+    std::cout << std::endl;
+    std::cout << "Druecke e fuer Exit und n fuer nochmal!" << std::endl;
+    char c('a');
+    while (true)
+    {
+        c = _getch();
+        if(c == 'e')
+        {
+            return true;
+        }
+        else if (c == 'n')
+        {
+            system("cls");
+            pcSnakeHead.SetXPos(this->GetSize()/2);
+            pcSnakeHead.SetYPos(this->GetSize()/2);
+            pcSnakeHead.SetRichtung('w');
+            this->SetSnakePartPos(pcSnakeHead);
+            pcSnakeHead.SetSnakePartCounter(0);
+            this->SetNewPartCounter(0);
+            this->SetPoints(0);
+            pcSnakeHead.SetHeadHitPart(false);
+            return false;
+        }
+    }
+    return true;
 }

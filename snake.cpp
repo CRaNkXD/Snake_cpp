@@ -107,8 +107,11 @@ void Snake::MoveSnakePart()
     {
         // Check if the head hits a part of the snake. When this happens the game will stop.
         if (m_nXPos == m_vSnakePart[nSnakePart].str_nXPos && m_nYPos == m_vSnakePart[nSnakePart].str_nYPos)
+        {
             m_bHeadHitPart = true;
-
+            break;
+        }
+            
         // Move the current part in the direction, which is saved in str_sRichtung.
         // New parts have no direction until now. They will get the direction in the next step.
         switch (m_vSnakePart[nSnakePart].str_sRichtung)
