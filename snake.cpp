@@ -11,7 +11,7 @@ Snake::Snake()
     m_vSnakePart = std::vector<m_strSnakePart>(22 * 22);
 }
 
-Snake::Snake(const int& nXpos, const int& nYpos, const Spielfeld &cSpielfeld)
+Snake::Snake(const unsigned int& nXpos, const unsigned int& nYpos, const Spielfeld &cSpielfeld)
     : m_nXPos(nXpos), m_nYPos(nYpos), m_sRichtung(constants::Direction::UP), m_nSnakePartCounter(0)
     , m_bHeadHitPart(false)
 {
@@ -28,7 +28,7 @@ int Snake::GetXPos() const
     return m_nXPos;
 }
 
-void Snake::SetXPos(const int& nXPos)
+void Snake::SetXPos(const unsigned int& nXPos)
 {
      m_nXPos = nXPos;
 }
@@ -38,7 +38,7 @@ int Snake::GetYPos() const
     return m_nYPos;
 }
 
-void Snake::SetYPos(const int& nYPos)
+void Snake::SetYPos(const unsigned int& nYPos)
 {
      m_nYPos = nYPos;
 }
@@ -172,7 +172,7 @@ void Snake::MoveSnakePart()
     }
 }
 
-void Snake::SetSnakePartCounter(const int& nCounter)
+void Snake::SetSnakePartCounter(const unsigned int& nCounter)
 {
     m_nSnakePartCounter = nCounter;
 }

@@ -27,7 +27,7 @@ Spielfeld::Spielfeld() :
     m_nSnakePartYPos = iRand(1,m_nSize);
 }
 
-Spielfeld::Spielfeld(const int& nSize) :
+Spielfeld::Spielfeld(const unsigned int& nSize) :
     m_nSize(nSize), m_nNewPart(0), m_nPoints(0)
 {
     srand(time(0));
@@ -158,12 +158,12 @@ int Spielfeld::GetSnakePartYPos() const
     return m_nSnakePartYPos;
 }
 
-void Spielfeld::SetNewPartCounter(const int& nValue)
+void Spielfeld::SetNewPartCounter(const unsigned int& nValue)
 {
     m_nNewPart = nValue;
 }
 
-void Spielfeld::AddPoints(const int& nPoints)
+void Spielfeld::AddPoints(const unsigned int& nPoints)
 {
     m_nPoints += nPoints;
 }
@@ -173,7 +173,7 @@ int Spielfeld::GetPoints() const
     return m_nPoints;
 }
 
-void Spielfeld::SetPoints(const int& nValue)
+void Spielfeld::SetPoints(const unsigned int& nValue)
 {
     m_nPoints = nValue;
 }

@@ -6,33 +6,33 @@
 class Snake
 {
 private:
-    int m_nXPos;
-    int m_nYPos;
+    unsigned int m_nXPos;
+    unsigned int m_nYPos;
     char m_sRichtung;
-    int m_nSnakePartCounter;
+    unsigned int m_nSnakePartCounter;
     bool m_bHeadHitPart;
     struct m_strSnakePart
     {
-        int str_nXPos;
-        int str_nYPos;
+        unsigned int str_nXPos;
+        unsigned int str_nYPos;
         char str_sDirection;
-        int str_nId;
+        unsigned int str_nId;
     };
     std::vector<m_strSnakePart> m_vSnakePart;
     Snake();
 
 public:
 
-    Snake(const int& nXPos, const int& nYpos, const Spielfeld &cSpielfeld);
+    Snake(unsigned const int& nXPos, const unsigned int& nYpos, const Spielfeld &cSpielfeld);
      ~Snake();
     int GetXPos() const;
-    void SetXPos(const int& nXPos);
+    void SetXPos(const unsigned int& nXPos);
     int GetYPos() const;
-    void SetYPos(const int& nYPos);
+    void SetYPos(const unsigned int& nYPos);
     char GetDirection() const;
     void SetDirection(const char& sRichtung);
     int GetSnakePartCounter() const;
-    void SetSnakePartCounter(const int& nCounter);
+    void SetSnakePartCounter(const unsigned int& nCounter);
     bool GetHeadHitPart() const;
     void SetHeadHitPart(const bool& bHeadHitPart);
 
