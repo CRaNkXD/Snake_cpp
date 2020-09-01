@@ -1,8 +1,10 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+
 #include "spielfeld.h"
 #include "snake.h"
+#include "constants.h"
 
 int main()
 {
@@ -39,37 +41,37 @@ int main()
 //                case 'e':
 //                    exit = true;
 //                    break;
-                case 'w':
-                    if (cSnakeHead.GetRichtung() != 's')
-                    cSnakeHead.SetRichtung('w');
+                case constants::Direction::UP:
+                    if (cSnakeHead.GetDirection() != constants::Direction::DOWN)
+                    cSnakeHead.SetDirection(constants::Direction::UP);
                     break;
-                case 's':
-                    if (cSnakeHead.GetRichtung() != 'w')
-                    cSnakeHead.SetRichtung('s');
+                case constants::Direction::DOWN:
+                    if (cSnakeHead.GetDirection() != constants::Direction::UP)
+                    cSnakeHead.SetDirection(constants::Direction::DOWN);
                     break;
-                case 'd':
-                    if (cSnakeHead.GetRichtung() != 'a')
-                    cSnakeHead.SetRichtung('d');
+                case constants::Direction::RIGHT:
+                    if (cSnakeHead.GetDirection() != constants::Direction::LEFT)
+                    cSnakeHead.SetDirection(constants::Direction::RIGHT);
                     break;
-                case 'a':
-                    if (cSnakeHead.GetRichtung() != 'd')
-                    cSnakeHead.SetRichtung('a');
+                case constants::Direction::LEFT:
+                    if (cSnakeHead.GetDirection() != constants::Direction::RIGHT)
+                    cSnakeHead.SetDirection(constants::Direction::LEFT);
                     break;
             }
         }
         // Move the snake into that direction.
-        switch (cSnakeHead.GetRichtung())
+        switch (cSnakeHead.GetDirection())
         {
-            case 'w':
+            case constants::Direction::UP:
                 cSnakeHead.MoveUp();
                 break;
-            case 's':
+            case constants::Direction::DOWN:
                 cSnakeHead.MoveDown();
                 break;
-            case 'd':
+            case constants::Direction::RIGHT:
                 cSnakeHead.MoveRight();
                 break;
-            case 'a':
+            case constants::Direction::LEFT:
                 cSnakeHead.MoveLeft();
                 break;
         }
