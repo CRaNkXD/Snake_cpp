@@ -3,12 +3,14 @@
 #include <iomanip>
 #include <conio.h>
 #include <fstream>
-#include "spielfeld.h"
-#include "snake.h"
 #include <windows.h>
-
 #include <cstdlib> // for rand() and srand()
 #include <ctime> // for time()
+
+#include "spielfeld.h"
+#include "snake.h"
+#include "constants.h"
+
 
 int iRand(int iMin, int iMax)
 {
@@ -16,26 +18,22 @@ int iRand(int iMin, int iMax)
 }
 
 
-Spielfeld::Spielfeld()
+Spielfeld::Spielfeld() :
+    m_nSize(22), m_nNewPart(0), m_nPoints(0)
 {
     srand(time(0));
 
-    m_nSize = 22;
-    m_nNewPart = 0;
     m_nSnakePartXPos = iRand(1,m_nSize);
     m_nSnakePartYPos = iRand(1,m_nSize);
-    m_nPoints = 0;
 }
 
-Spielfeld::Spielfeld(int nSize)
+Spielfeld::Spielfeld(const int& nSize) :
+    m_nSize(nSize), m_nNewPart(0), m_nPoints(0)
 {
     srand(time(0));
 
-    m_nSize = nSize;
-    m_nNewPart = 0;
     m_nSnakePartXPos = iRand(1,m_nSize);
     m_nSnakePartYPos = iRand(1,m_nSize);
-    m_nPoints = 0;
 }
 
 Spielfeld::~Spielfeld()
@@ -43,12 +41,12 @@ Spielfeld::~Spielfeld()
 //    std::cout << "Destructor Spielfeld" << std::endl;
 }
 
-int Spielfeld::GetSize()
+int Spielfeld::GetSize() const
 {
     return m_nSize;
 }
 
-void Spielfeld::Print(Snake &pcSnakeHead)
+void Spielfeld::Print(const Snake &pcSnakeHead) const
 {
     bool bPrint = false;
     for (int nRow(0); nRow <= m_nSize + 1; nRow++)
@@ -103,7 +101,7 @@ void Spielfeld::Print(Snake &pcSnakeHead)
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), p );
 }
 
-void Spielfeld::SetSnakePartPos(Snake &pcSnakeHead)
+void Spielfeld::SetSnakePartPos(const Snake &pcSnakeHead)
 {
     // Create a new part for the snake to eat and check if it is on a free space.
     bool bPosSet = false;
@@ -150,32 +148,32 @@ void Spielfeld::SetSnakePartPos(Snake &pcSnakeHead)
     while(!bPosSet);
 }
 
-int Spielfeld::GetSnakePartXPos()
+int Spielfeld::GetSnakePartXPos() const
 {
     return m_nSnakePartXPos;
 }
 
-int Spielfeld::GetSnakePartYPos()
+int Spielfeld::GetSnakePartYPos() const
 {
     return m_nSnakePartYPos;
 }
 
-void Spielfeld::SetNewPartCounter(int nValue)
+void Spielfeld::SetNewPartCounter(const int& nValue)
 {
     m_nNewPart = nValue;
 }
 
-void Spielfeld::AddPoints(int nPoints)
+void Spielfeld::AddPoints(const int& nPoints)
 {
     m_nPoints += nPoints;
 }
 
-int Spielfeld::GetPoints()
+int Spielfeld::GetPoints() const
 {
     return m_nPoints;
 }
 
-void Spielfeld::SetPoints(int nValue)
+void Spielfeld::SetPoints(const int& nValue)
 {
     m_nPoints = nValue;
 }
@@ -288,7 +286,7 @@ bool Spielfeld::GameEnd(Snake& pcSnakeHead)
             system("cls");
             pcSnakeHead.SetXPos(this->GetSize()/2);
             pcSnakeHead.SetYPos(this->GetSize()/2);
-            pcSnakeHead.SetRichtung('w');
+            pcSnakeHead.SetDirection(constants::Direction::UP);
             this->SetSnakePartPos(pcSnakeHead);
             pcSnakeHead.SetSnakePartCounter(0);
             this->SetNewPartCounter(0);

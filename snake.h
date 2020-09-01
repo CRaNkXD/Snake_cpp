@@ -3,14 +3,6 @@
 
 #include "spielfeld.h"
 
-struct m_strSnakePart
-{
-    int str_nXPos;
-    int str_nYPos;
-    char str_sRichtung;
-    int str_nId;
-};
-
 class Snake
 {
 private:
@@ -19,30 +11,37 @@ private:
     char m_sRichtung;
     int m_nSnakePartCounter;
     bool m_bHeadHitPart;
+    struct m_strSnakePart
+    {
+        int str_nXPos;
+        int str_nYPos;
+        char str_sDirection;
+        int str_nId;
+    };
     std::vector<m_strSnakePart> m_vSnakePart;
     Snake();
 
 public:
 
-    Snake(int nXPos, int nYpos, Spielfeld &cSpielfeld);
+    Snake(const int& nXPos, const int& nYpos, const Spielfeld &cSpielfeld);
      ~Snake();
-    int GetXPos();
-    void SetXPos(int nXPos);
-    int GetYPos();
-    void SetYPos(int nYPos);
-    char GetRichtung();
-    void SetRichtung(char sRichtung);
-    int GetSnakePartCounter();
-    void SetSnakePartCounter(int nCounter);
-    bool GetHeadHitPart();
-    void SetHeadHitPart(bool bHeadHitPart);
+    int GetXPos() const;
+    void SetXPos(const int& nXPos);
+    int GetYPos() const;
+    void SetYPos(const int& nYPos);
+    char GetDirection() const;
+    void SetDirection(const char& sRichtung);
+    int GetSnakePartCounter() const;
+    void SetSnakePartCounter(const int& nCounter);
+    bool GetHeadHitPart() const;
+    void SetHeadHitPart(const bool& bHeadHitPart);
 
     void MoveUp();
     void MoveDown();
     void MoveLeft();
     void MoveRight();
     void MoveSnakePart();
-    std::vector<m_strSnakePart> GetSnakePart();
+    std::vector<m_strSnakePart> GetSnakePart() const;
     void AddSnakePart();
 
 };

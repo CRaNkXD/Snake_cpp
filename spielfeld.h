@@ -4,7 +4,7 @@ class Snake;
 class Spielfeld
 {
 private:
-    int m_nSize;
+    const int m_nSize;
     int m_nSnakePartXPos;
     int m_nSnakePartYPos;
     int m_nNewPart;
@@ -12,17 +12,17 @@ private:
 
 public:
     Spielfeld();
-    Spielfeld(int nSize);
+    Spielfeld(const int& nSize);
     ~Spielfeld();
 
-    void Print(Snake &pcSnakeHead);
-    int GetSize();
-    void SetSnakePartPos(Snake &pcSnakeHead);
-    void SetNewPartCounter(int nValue);
-    int GetSnakePartXPos();
-    int GetSnakePartYPos();
-    void AddPoints(int nPoints);
-    int GetPoints();
-    void SetPoints(int nValue);
+    void Print(const Snake &pcSnakeHead) const;
+    int GetSize() const;
+    void SetSnakePartPos(const Snake &pcSnakeHead);
+    void SetNewPartCounter(const int& nValue);
+    int GetSnakePartXPos() const;
+    int GetSnakePartYPos() const;
+    void AddPoints(const int& nPoints);
+    int GetPoints() const;
+    void SetPoints(const int& nValue);
     bool GameEnd(Snake &pcSnakeHead);
 };

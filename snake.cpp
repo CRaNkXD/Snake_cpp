@@ -1,16 +1,18 @@
-#include "snake.h"
-#include "spielfeld.h"
 #include <iostream>
 
+#include "snake.h"
+#include "spielfeld.h"
+#include "constants.h"
+
 Snake::Snake()
-    : m_nXPos(10), m_nYPos(10), m_sRichtung('w'), m_nSnakePartCounter(0)
+    : m_nXPos(10), m_nYPos(10), m_sRichtung(constants::Direction::UP), m_nSnakePartCounter(0)
     , m_bHeadHitPart(false)
 {
     m_vSnakePart = std::vector<m_strSnakePart>(22 * 22);
 }
 
-Snake::Snake(int nXpos, int nYpos, Spielfeld &cSpielfeld)
-    : m_nXPos(nXpos), m_nYPos(nYpos), m_sRichtung('w'), m_nSnakePartCounter(0)
+Snake::Snake(const int& nXpos, const int& nYpos, const Spielfeld &cSpielfeld)
+    : m_nXPos(nXpos), m_nYPos(nYpos), m_sRichtung(constants::Direction::UP), m_nSnakePartCounter(0)
     , m_bHeadHitPart(false)
 {
     m_vSnakePart = std::vector<m_strSnakePart>(cSpielfeld.GetSize()*cSpielfeld.GetSize());
@@ -21,32 +23,32 @@ Snake::~Snake()
 //    std::cout << "Destructor Snake" << std::endl;
 }
 
-int Snake::GetXPos()
+int Snake::GetXPos() const
 {
     return m_nXPos;
 }
 
-void Snake::SetXPos(int nXPos)
+void Snake::SetXPos(const int& nXPos)
 {
      m_nXPos = nXPos;
 }
 
-int Snake::GetYPos()
+int Snake::GetYPos() const
 {
     return m_nYPos;
 }
 
-void Snake::SetYPos(int nYPos)
+void Snake::SetYPos(const int& nYPos)
 {
      m_nYPos = nYPos;
 }
 
-char Snake::GetRichtung()
+char Snake::GetDirection() const
 {
     return m_sRichtung;
 }
 
-void Snake::SetRichtung(char sRichtung)
+void Snake::SetDirection(const char& sRichtung)
 {
     m_sRichtung = sRichtung;
 }
@@ -71,7 +73,7 @@ void Snake::MoveRight()
     m_nXPos += 1;
 }
 
-std::vector<m_strSnakePart> Snake::GetSnakePart()
+std::vector<Snake::m_strSnakePart> Snake::GetSnakePart() const
 {
     return m_vSnakePart;
 }
@@ -84,19 +86,19 @@ void Snake::AddSnakePart()
     m_vSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
     m_vSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_nXPos;
     m_vSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_nYPos;
-    m_vSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
+    m_vSnakePart[m_nSnakePartCounter - 1].str_sDirection = 'z';
     }
     else
     {
         m_vSnakePart[m_nSnakePartCounter - 1].str_nId = m_nSnakePartCounter;
         m_vSnakePart[m_nSnakePartCounter - 1].str_nXPos = m_vSnakePart[m_nSnakePartCounter - 2].str_nXPos;
         m_vSnakePart[m_nSnakePartCounter - 1].str_nYPos = m_vSnakePart[m_nSnakePartCounter - 2].str_nYPos;
-        m_vSnakePart[m_nSnakePartCounter - 1].str_sRichtung = 'z';
+        m_vSnakePart[m_nSnakePartCounter - 1].str_sDirection = 'z';
     }
 }
 
 
-int Snake::GetSnakePartCounter()
+int Snake::GetSnakePartCounter() const
 {
     return m_nSnakePartCounter;
 }
@@ -114,18 +116,18 @@ void Snake::MoveSnakePart()
             
         // Move the current part in the direction, which is saved in str_sRichtung.
         // New parts have no direction until now. They will get the direction in the next step.
-        switch (m_vSnakePart[nSnakePart].str_sRichtung)
+        switch (m_vSnakePart[nSnakePart].str_sDirection)
         {
-        case 'w':
+        case constants::Direction::UP:
             m_vSnakePart[nSnakePart].str_nYPos -= 1;
             break;
-        case 's':
+        case constants::Direction::DOWN:
             m_vSnakePart[nSnakePart].str_nYPos += 1;
             break;
-        case 'a':
+        case constants::Direction::LEFT:
             m_vSnakePart[nSnakePart].str_nXPos -= 1;
             break;
-        case 'd':
+        case constants::Direction::RIGHT:
             m_vSnakePart[nSnakePart].str_nXPos += 1;
             break;
         }
@@ -135,52 +137,52 @@ void Snake::MoveSnakePart()
         {
             switch (m_sRichtung)
             {
-            case 'w':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'w';
+            case constants::Direction::UP:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::UP;
                 break;
-            case 's':
-                m_vSnakePart[nSnakePart].str_sRichtung = 's';
+            case constants::Direction::DOWN:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::DOWN;
                 break;
-            case 'a':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'a';
+            case constants::Direction::LEFT:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::LEFT;
                 break;
-            case 'd':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'd';
+            case constants::Direction::RIGHT:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::RIGHT;
                 break;
             }
         }
         else
         {
-            switch (m_vSnakePart[nSnakePart - 1].str_sRichtung)
+            switch (m_vSnakePart[nSnakePart - 1].str_sDirection)
             {
-            case 'w':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'w';
+            case constants::Direction::UP:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::UP;
                 break;
-            case 's':
-                m_vSnakePart[nSnakePart].str_sRichtung = 's';
+            case constants::Direction::DOWN:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::DOWN;
                 break;
-            case 'a':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'a';
+            case constants::Direction::LEFT:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::LEFT;
                 break;
-            case 'd':
-                m_vSnakePart[nSnakePart].str_sRichtung = 'd';
+            case constants::Direction::RIGHT:
+                m_vSnakePart[nSnakePart].str_sDirection = constants::Direction::RIGHT;
                 break;
             }
         }
     }
 }
 
-void Snake::SetSnakePartCounter(int nCounter)
+void Snake::SetSnakePartCounter(const int& nCounter)
 {
     m_nSnakePartCounter = nCounter;
 }
 
-bool Snake::GetHeadHitPart()
+bool Snake::GetHeadHitPart() const
 {
     return m_bHeadHitPart;
 }
 
-void Snake::SetHeadHitPart(bool bHeadHitPart)
+void Snake::SetHeadHitPart(const bool& bHeadHitPart)
 {
     m_bHeadHitPart = bHeadHitPart;
 }
