@@ -10,7 +10,7 @@ Have fun and try to beat the highscore list.
 ![Alt text](Screenshots/End_screen.PNG?raw=true "End screen")
 
 ## To be implemented
-* Change the array pointers to a std::vector.
+* Change the array pointers to a std::vector. :heavy_check_mark:
 * Find another solution for the deprecated \_kbhit and \_getch.
 
 ## License
